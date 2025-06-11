@@ -1,0 +1,28 @@
+name: Build Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: asciidoctor/docker-asciidoctor:1.88
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build documentation
+        run: |
+          make clean && make all
+
+      - name: Archive output
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdv-lvl
+          path: build/SDV-level.html
