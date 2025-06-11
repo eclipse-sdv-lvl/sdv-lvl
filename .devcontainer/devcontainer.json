@@ -1,0 +1,17 @@
+{
+    "name": "Asciidoctor",
+    "image": "asciidoctor/docker-asciidoctor:1.88",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "asciidoctor.asciidoctor-vscode",
+                "jebbs.plantuml"
+            ],
+            "settings": {
+                "asciidoc.asciidoctor_command": "asciidoctor -r asciidoctor-diagram",
+                "asciidoc.preview.useEditorStyle": false,
+                "asciidoc.use_asciidoctor_js": false
+            }
+        }
+    }
+}
