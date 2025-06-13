@@ -23,4 +23,26 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sdv-lvl
-          path: build/SDV-level.html
+          path: build/index.html
+      - name: Upload artifact for deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          name: github-pages
+          path: build/github-pages.tar
+          retention-days: 1
+          if-no-files-found: error
+  docs-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5
